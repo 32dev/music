@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Music Player</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .Item {
+            display: inline-block;
+            width: 185px;
+            margin-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        .PlayList img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function MusicPlayer(props) {
+            const list = props.list;
+            const [currentMusic, setCurrentMusic] = React.useState(list[0]);
+
+            const play = (music) => {
+                console.log(music);
+                setCurrentMusic(music);
+            };
+
+            const listItems = list.map((music) => (
+                <div className="Item" key={music} onClick={() => play(music)}>
+                    <img src={"img/" + music + ".png"} alt={music} className="img-fluid" />
+                    <div className="text-center mt-2">{music}</div>
+                </div>
+            ));
+
+            return (
+                <div className="container">
+                    <div className="row mt-5">
+                        <div className="col-md-6 offset-md-3">
+                            <div className="MusicPlayer">
+                                <div className="PlayList">{listItems}</div>
+                                <audio src={`mp3/${currentMusic}.mp3`} id="player" className="mt-3 w-100" controls>
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<MusicPlayer list={["BrainFlow", "Higher", "물방울", "패턴", "휴식처"]} />);
+    </script>
+</body>
+
+</html>
