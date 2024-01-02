@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Music Player</title>
+    <title>32dev.music</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -26,10 +26,46 @@
             width: 100%;
             height: auto;
         }
+
+        /* 추가된 스타일 */
+        .navbar {
+            background-color: #343a40;
+            /* 부트스트랩의 dark 색상 */
+            padding: 15px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: white;
+        }
+
+        .MusicPlayer {
+            position: relative;
+            padding-bottom: 56px;
+            /* 플레이어의 높이만큼 여백을 주세요 */
+        }
+
+        #player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">32dev.music</span>
+        </div>
+    </nav>
+
     <div id="root"></div>
     <script type="text/babel">
         function MusicPlayer(props) {
@@ -54,10 +90,10 @@
                         <div className="col-md-6 offset-md-3">
                             <div className="MusicPlayer">
                                 <div className="PlayList">{listItems}</div>
-                                <audio src={`mp3/${currentMusic}.mp3`} id="player" className="mt-3 w-100" controls>
-                                    Your browser does not support the audio element.
-                                </audio>
                             </div>
+                            <audio src={`mp3/${currentMusic}.mp3`} id="player" controls>
+                                Your browser does not support the audio element.
+                            </audio>
                         </div>
                     </div>
                 </div>
