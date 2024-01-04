@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>32dev.music</title>
+    <title>Music</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -104,7 +104,6 @@
             const play = (music) => {
                 console.log(music);
                 setCurrentMusic(music);
-                visualize(); // 새로운 음악이 선택되면 visualize 함수 호출
             };
 
             const listItems = list.map((music) => (
@@ -114,47 +113,6 @@
                 </div>
             ));
 
-            const visualize = () => {
-                const audio = document.getElementById('player');
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const analyser = audioContext.createAnalyser();
-                const source = audioContext.createMediaElementSource(audio);
-                source.connect(analyser);
-                analyser.connect(audioContext.destination);
-
-                analyser.fftSize = 256;
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-
-                const canvas = document.getElementById('visualizerCanvas');
-                const ctx = canvas.getContext('2d');
-
-                const draw = () => {
-                    const WIDTH = canvas.width;
-                    const HEIGHT = canvas.height;
-
-                    analyser.getByteFrequencyData(dataArray);
-
-                    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-                    // Reduce the multiplier to make the bars 1/3 of the original size
-                    const barWidth = (WIDTH / bufferLength) * 1;
-                    let barHeight;
-                    let x = 0;
-
-                    for (let i = 0; i < bufferLength; i++) {
-                        barHeight = dataArray[i] / 10;
-
-                        ctx.fillStyle = 'rgb(' + barHeight + ',' + barHeight + ',' + barHeight + ')';
-                        ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
-
-                        x += barWidth + 1;
-                    }
-
-                    requestAnimationFrame(draw);
-                };
-                draw();
-            };
 
             return (
                 <div className="container">
